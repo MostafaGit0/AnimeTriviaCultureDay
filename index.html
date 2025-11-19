@@ -33,6 +33,29 @@
         .container {
             max-width: 1200px;
             width: 100%;
+            position: relative;
+        }
+
+        .records-button {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .records-button:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
         .anime-selection {
@@ -105,6 +128,13 @@
             margin-bottom: 10px;
         }
 
+        .player-name {
+            color: #666;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
         .back-button {
             background: #95a5a6;
             color: white;
@@ -146,6 +176,44 @@
             background: #e8f8f5;
             border-radius: 8px;
             border-left: 4px solid #27ae60;
+            margin-bottom: 20px;
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .check-button, .x-button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .check-button {
+            background: #27ae60;
+            color: white;
+        }
+
+        .check-button:hover {
+            background: #229954;
+            transform: scale(1.05);
+        }
+
+        .x-button {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .x-button:hover {
+            background: #c0392b;
+            transform: scale(1.05);
         }
 
         .no-more {
@@ -154,6 +222,15 @@
             color: #e74c3c;
             font-weight: 600;
             padding: 40px;
+        }
+
+        .final-score {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .button-group {
@@ -197,6 +274,415 @@
             display: none;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #player-name-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        #player-name-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            background: #3498db;
+            color: white;
+        }
+
+        .modal-button:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .modal-button.cancel {
+            background: #95a5a6;
+        }
+
+        .modal-button.cancel:hover {
+            background: #7f8c8d;
+        }
+
+        .records-content {
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #records-list {
+            margin: 20px 0;
+        }
+
+        .record-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .record-name {
+            font-size: 1.3em;
+            color: #333;
+        }
+
+        .record-score {
+            font-size: 1.2em;
+            color: #27ae60;
+        }
+
+        .record-score.failing {
+            color: #e74c3c;
+        }
+
+        .record-anime {
+            color: #666;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .record-questions {
+            margin-top: 10px;
+        }
+
+        .question-result {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .question-result.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .question-result.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .modal-content input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button.confirm {
+            background: #27ae60;
+            color: white;
+        }
+
+        .modal-button.confirm:hover {
+            background: #229954;
+        }
+
+        .modal-button.cancel {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .modal-button.cancel:hover {
+            background: #7f8c8d;
+        }
+
+        /* Answer Buttons */
+        .answer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .answer-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .correct-btn {
+            background: #27ae60;
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .correct-btn:hover {
+            background: #229954;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.5);
+        }
+
+        .correct-btn:active {
+            background: #1e8449;
+        }
+
+        .wrong-btn {
+            background: #e74c3c;
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .wrong-btn:hover {
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+        }
+
+        .wrong-btn:active {
+            background: #a93226;
+        }
+
+        /* Records Button */
+        .records-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .records-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .records-button.hidden {
+            display: none;
+        }
+
+        /* Records Modal */
+        .records-modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .records-modal-content h2 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .record-entry {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .record-entry h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .record-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1em;
+        }
+
+        .stat.correct {
+            color: #27ae60;
+        }
+
+        .stat.wrong {
+            color: #e74c3c;
+        }
+
+        .question-list {
+            margin-top: 10px;
+        }
+
+        .question-item {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .question-item.correct {
+            background: #d5f4e6;
+            border-left: 3px solid #27ae60;
+        }
+
+        .question-item.wrong {
+            background: #fadbd8;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .close-records {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .close-records:hover {
+            background: #7f8c8d;
+        }
+
+        .no-records {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2em;
@@ -217,23 +703,40 @@
             .go-button, .reset-button {
                 width: 100%;
             }
+
+            .records-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 0.9em;
+            }
+
+            .answer-buttons {
+                flex-direction: column;
+            }
+
+            .answer-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <button class="records-button" id="records-button" onclick="showRecords()">📊 Records</button>
+
     <div class="container">
         <h1>🎌 Anime Trivia Quiz 🎌</h1>
         
         <div class="anime-selection" id="anime-selection">
-            <div class="anime-box" id="naruto-box" onclick="selectAnime('naruto')">
+            <div class="anime-box" id="naruto-box" onclick="promptName('naruto')">
                 <h2>🍥 Naruto</h2>
                 <p>15 Questions</p>
             </div>
-            <div class="anime-box" id="jjk-box" onclick="selectAnime('jjk')">
+            <div class="anime-box" id="jjk-box" onclick="promptName('jjk')">
                 <h2>⚡ JJK</h2>
                 <p>9 Questions</p>
             </div>
-            <div class="anime-box" id="demon-slayer-box" onclick="selectAnime('demonSlayer')">
+            <div class="anime-box" id="demon-slayer-box" onclick="promptName('demonSlayer')">
                 <h2>⚔️ Demon Slayer</h2>
                 <p>15 Questions</p>
             </div>
@@ -243,20 +746,50 @@
             <button class="back-button" onclick="goBack()">← Back to Selection</button>
             <div class="quiz-header">
                 <h2 id="quiz-title"></h2>
+                <p class="player-name" id="player-name"></p>
             </div>
             <div class="quiz-content" id="quiz-content">
                 <div class="question-box hidden" id="question-display">
                     <div class="question" id="question-text"></div>
                     <div class="answer" id="answer-text"></div>
+                    <div class="answer-buttons">
+                        <button class="answer-btn correct-btn" onclick="markAnswer(true, event)">
+                            ✓ Correct
+                        </button>
+                        <button class="answer-btn wrong-btn" onclick="markAnswer(false, event)">
+                            ✗ Wrong
+                        </button>
+                    </div>
                 </div>
                 <div class="no-more hidden" id="no-more-message">
                     🎉 No more questions! You've completed all of them! 🎉
                 </div>
             </div>
             <div class="button-group">
-                <button class="go-button" id="go-button" onclick="showQuestion()">Go</button>
+                <button class="go-button" id="go-button" onclick="handleGoSkip()">Go</button>
                 <button class="reset-button" onclick="resetQuiz()">Reset</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Name Input Modal -->
+    <div class="modal" id="name-modal">
+        <div class="modal-content">
+            <h3>Enter Your Name</h3>
+            <input type="text" id="player-name-input" placeholder="Your name..." maxlength="30">
+            <div class="modal-buttons">
+                <button class="modal-button cancel" onclick="closeNameModal()">Cancel</button>
+                <button class="modal-button confirm" onclick="startQuiz()">Start</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Records Modal -->
+    <div class="modal" id="records-modal">
+        <div class="records-modal-content">
+            <h2>📊 Player Records</h2>
+            <div id="records-list"></div>
+            <button class="close-records" onclick="closeRecords()">Close</button>
         </div>
     </div>
 
@@ -321,17 +854,73 @@
         let currentAnime = null;
         let availableQuestions = [];
         let currentQuestionIndex = -1;
+        let playerName = '';
+        let questionAnswered = false;
+        let quizStarted = false;
+        let currentSession = {
+            name: '',
+            anime: '',
+            questions: [],
+            correct: 0,
+            wrong: 0
+        };
+        let allRecords = JSON.parse(localStorage.getItem('quizRecords') || '[]');
+
+        function promptName(anime) {
+            currentAnime = anime;
+            document.getElementById('name-modal').classList.add('active');
+            document.getElementById('player-name-input').value = '';
+            document.getElementById('player-name-input').focus();
+        }
+
+        function closeNameModal() {
+            document.getElementById('name-modal').classList.remove('active');
+            currentAnime = null;
+        }
+
+        function startQuiz() {
+            playerName = document.getElementById('player-name-input').value.trim();
+            if (!playerName) {
+                alert('Please enter your name!');
+                return;
+            }
+
+            document.getElementById('name-modal').classList.remove('active');
+            selectAnime(currentAnime);
+        }
+
+        // Allow Enter key to submit name
+        document.getElementById('player-name-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startQuiz();
+            }
+        });
 
         function selectAnime(anime) {
             currentAnime = anime;
             document.getElementById('anime-selection').style.display = 'none';
             document.getElementById('quiz-container').classList.add('active');
             document.getElementById('quiz-title').textContent = quizData[anime].title;
+            document.getElementById('player-name').textContent = 'Player: ' + playerName;
+            
+            // Initialize session
+            currentSession = {
+                name: playerName,
+                anime: quizData[anime].title,
+                questions: [],
+                correct: 0,
+                wrong: 0
+            };
             
             // Initialize available questions
             availableQuestions = [...Array(quizData[anime].questions.length).keys()];
             shuffleArray(availableQuestions);
             currentQuestionIndex = -1;
+            quizStarted = false;
+            
+            // Reset Go button
+            document.getElementById('go-button').textContent = 'Go';
+            document.getElementById('go-button').style.display = 'inline-block';
             
             // Hide question display and no-more message
             document.getElementById('question-display').classList.add('hidden');
@@ -339,9 +928,16 @@
         }
 
         function goBack() {
+            // Save session if any questions were answered
+            if (currentSession.questions.length > 0) {
+                allRecords.push({...currentSession});
+                localStorage.setItem('quizRecords', JSON.stringify(allRecords));
+            }
+            
             document.getElementById('anime-selection').style.display = 'grid';
             document.getElementById('quiz-container').classList.remove('active');
             currentAnime = null;
+            playerName = '';
         }
 
         function shuffleArray(array) {
@@ -351,18 +947,57 @@
             }
         }
 
+        function handleGoSkip() {
+            if (!quizStarted) {
+                // First time - start the quiz
+                showQuestion();
+                quizStarted = true;
+                document.getElementById('go-button').textContent = 'Skip';
+            } else {
+                // Skip current question
+                skipQuestion();
+            }
+        }
+
+        function skipQuestion() {
+            if (availableQuestions.length === 0) {
+                return;
+            }
+            
+            // Skip without recording answer
+            availableQuestions.shift();
+            currentQuestionIndex++;
+            
+            // Show next question
+            showQuestion();
+        }
+
         function showQuestion() {
             if (availableQuestions.length === 0) {
                 // All questions have been shown
                 document.getElementById('question-display').classList.add('hidden');
                 document.getElementById('no-more-message').classList.remove('hidden');
-                document.getElementById('go-button').disabled = true;
+                document.getElementById('go-button').style.display = 'none';
+                
+                // Display final score
+                const finalScoreHtml = `
+                    <div style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                        <strong style="font-size: 1.2em;">Final Score:</strong><br><br>
+                        <span style="color: #27ae60; font-size: 1.1em;">✓ Correct: ${currentSession.correct}</span><br>
+                        <span style="color: #e74c3c; font-size: 1.1em;">✗ Wrong: ${currentSession.wrong}</span><br>
+                        <strong style="font-size: 1.1em;">Total: ${currentSession.correct + currentSession.wrong}</strong>
+                    </div>
+                `;
+                document.getElementById('no-more-message').innerHTML += finalScoreHtml;
+                
+                // Save session
+                allRecords.push({...currentSession});
+                localStorage.setItem('quizRecords', JSON.stringify(allRecords));
                 return;
             }
 
-            // Get the next question index from our shuffled array
-            currentQuestionIndex++;
-            const questionIndex = availableQuestions.shift();
+            // Get the current question
+            const questionIndex = availableQuestions[0];
             const questionData = quizData[currentAnime].questions[questionIndex];
 
             // Display the question and answer
@@ -370,6 +1005,45 @@
             document.getElementById('answer-text').textContent = 'Answer: ' + questionData.a;
             document.getElementById('question-display').classList.remove('hidden');
             document.getElementById('no-more-message').classList.add('hidden');
+            
+            // Change button text to "Skip" after first question
+            if (quizStarted) {
+                document.getElementById('go-button').textContent = 'Skip';
+            }
+            
+            // Reset the answer flag
+            questionAnswered = false;
+        }
+
+        function markAnswer(isCorrect, event) {
+            // Get the current question
+            const questionIndex = availableQuestions[0];
+            const questionData = quizData[currentAnime].questions[questionIndex];
+            
+            // Record the answer
+            if (isCorrect) {
+                currentSession.correct++;
+            } else {
+                currentSession.wrong++;
+            }
+            
+            currentSession.questions.push({
+                question: questionData.q,
+                answer: questionData.a,
+                correct: isCorrect
+            });
+            
+            // Mark that this question has been answered
+            questionAnswered = true;
+            
+            // Remove this question from available questions
+            availableQuestions.shift();
+            currentQuestionIndex++;
+            
+            // Automatically show next question
+            setTimeout(() => {
+                showQuestion();
+            }, 200); // Small delay for smooth transition
         }
 
         function resetQuiz() {
@@ -377,11 +1051,69 @@
             availableQuestions = [...Array(quizData[currentAnime].questions.length).keys()];
             shuffleArray(availableQuestions);
             currentQuestionIndex = -1;
+            quizStarted = false;
             
-            // Hide displays
+            // Reset session
+            currentSession = {
+                name: playerName,
+                anime: quizData[currentAnime].title,
+                questions: [],
+                correct: 0,
+                wrong: 0
+            };
+            
+            // Reset Go button
+            document.getElementById('go-button').textContent = 'Go';
+            document.getElementById('go-button').style.display = 'inline-block';
+            
+            // Hide displays and reset
             document.getElementById('question-display').classList.add('hidden');
             document.getElementById('no-more-message').classList.add('hidden');
-            document.getElementById('go-button').disabled = false;
+        }
+
+        function showRecords() {
+            const recordsList = document.getElementById('records-list');
+            
+            if (allRecords.length === 0) {
+                recordsList.innerHTML = '<div class="no-records">No records yet. Start a quiz to see your results here!</div>';
+            } else {
+                let html = '';
+                allRecords.forEach((record, index) => {
+                    const total = record.correct + record.wrong;
+                    
+                    html += `
+                        <div class="record-entry">
+                            <h3>${record.name} - ${record.anime}</h3>
+                            <div class="record-stats">
+                                <div class="stat correct">
+                                    <strong>✓ Correct:</strong> ${record.correct}
+                                </div>
+                                <div class="stat wrong">
+                                    <strong>✗ Wrong:</strong> ${record.wrong}
+                                </div>
+                                <div class="stat">
+                                    <strong>Total:</strong> ${total}
+                                </div>
+                            </div>
+                            <div class="question-list">
+                                <strong>Questions Attempted:</strong>
+                                ${record.questions.map(q => `
+                                    <div class="question-item ${q.correct ? 'correct' : 'wrong'}">
+                                        ${q.correct ? '✓' : '✗'} ${q.question}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+                recordsList.innerHTML = html;
+            }
+            
+            document.getElementById('records-modal').classList.add('active');
+        }
+
+        function closeRecords() {
+            document.getElementById('records-modal').classList.remove('active');
         }
     </script>
 </body>
